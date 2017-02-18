@@ -1,7 +1,10 @@
 # Redux state with immutable.js, normalizr and reselect
 A React application example with using Redux, immutable.js, normalizr and reselect
+
 More detailed explanation can be found in this blog post: [http://fullstackdeveloper.info/redux-state-with-immutable-js-normalizr-and-reselect](http://fullstackdeveloper.info/redux-state-with-immutable-js-normalizr-and-reselect)
+
 ### How to use
+
 After cloning this repository, install dependencies by:
  ```
 $ npm install
