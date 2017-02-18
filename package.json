@@ -2,7 +2,7 @@
   "name": "redux-example",
   "version": "1.0.0",
   "description": "Redux state with immutable.js, normalizr and reselect",
-  "main": "webpack.config.js",
+  "main": "src/index.js",
   "scripts": {
     "start": "./node_modules/.bin/webpack-dev-server"
   },
