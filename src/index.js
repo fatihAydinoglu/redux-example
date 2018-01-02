@@ -11,8 +11,8 @@ const store = createStore(reducer);
 
 // Render react application with redux store
 ReactDOM.render(
-    <Provider store={store}>
-        <Movies />
-    </Provider>,
-    document.getElementById('root')
+  <Provider store={store}>
+    <Movies />
+  </Provider>,
+  document.getElementById('root'),
 );

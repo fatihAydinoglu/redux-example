@@ -1,72 +1,48 @@
+import { Map } from 'immutable';
 import { createSelector } from 'reselect';
 
 // Select entities from state
-const getResultMap = (state) => state.get('result');
-const getGenresMap = (state) => state.getIn(['entities', 'genres']);
-const getActorsMap = (state) => state.getIn(['entities', 'actors']);
-const getMoviesMap = (state) => state.getIn(['entities', 'movies']);
-
-// Select movie result from state 
-const getResult = createSelector(
-    getResultMap,
-    (resultMap) => resultMap && resultMap.toArray()
-);
-
-// Select genres from state
-const getGenres = createSelector(
-    getGenresMap,
-    (genresMap) => genresMap && genresMap.toJS()
-);
-
-// Select actors from state
-const getActors = createSelector(
-    getActorsMap,
-    (actorsMap) => actorsMap && actorsMap.toJS()
-);
-
-// Select movies from state
-const getMovies = createSelector(
-    getMoviesMap,
-    (moviesMap) => moviesMap && moviesMap.toJS()
-);
-
+const getResult = state => state.get('result');
+const getGenres = state => state.getIn(['entities', 'genres']);
+const getActors = state => state.getIn(['entities', 'actors']);
+const getMovies = state => state.getIn(['entities', 'movies']);
 // Select filter from state
-const getFilter = (state) => state.get('filter').toJS();
+const getFilter = state => state.get('filter');
 
 // Select movie result list
 // filter against selected filter in state
 const getMoviesResult = createSelector(
-    getResult,
-    getMovies,
-    getGenres,
-    getActors,
-    getFilter,
-    (result, movies, genres, actors, filter) => {
-        if (!result) return null;
+  getResult,
+  getMovies,
+  getGenres,
+  getActors,
+  getFilter,
+  (result, movies, genres, actors, filter) => {
+    if (!result || result.size === 0) return null;
+    return (
+      result
         // filter results first
-        return result.filter(movieId => {
-            const movie = movies[movieId];
-            return (
-                (filter.genre === '' || movie.genres.includes(Number(filter.genre)))
-                &&
-                (filter.actor === '' || movie.actors.includes(Number(filter.actor)))
-            );
+        .filter((movieId) => {
+          const movie = movies.get(movieId.toString());
+          const genre = filter.get('genre');
+          const actor = filter.get('actor');
+          return (
+            (genre === '' || movie.get('genres').includes(Number(genre))) &&
+            (actor === '' || movie.get('actors').includes(Number(actor)))
+          );
         })
-        // return movie results with actos and genres
-        .map(movieId => {
-            const movie = movies[movieId];
-            return {
-                ...movie,
-                actors: movie.actors.map(actorId => actors[actorId]),
-                genres: movie.genres.map(genreId => genres[genreId])
-            };
-        });
-    }
+        // return movie results with actors and genres
+        .map((movieId) => {
+          const movie = movies.get(movieId.toString());
+          const movieResultItemMap = Map({
+            movie,
+            actors: movie.get('actors').map(actorId => actors.get(actorId.toString())),
+            genres: movie.get('genres').map(genreId => genres.get(genreId.toString())),
+          });
+          return movieResultItemMap;
+        })
+    );
+  },
 );
 
-export {
-    getGenres,
-    getActors,
-    getMoviesResult,
-    getFilter
-};
+export { getGenres, getActors, getMoviesResult, getFilter };
