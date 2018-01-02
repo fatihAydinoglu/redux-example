@@ -3,17 +3,14 @@ import movieNormalizer from './movieNormalizer';
 
 // Fetch movies
 const fetchMovies = () => ({
-    type: 'FETCH_MOVIES',
-    payload: movieNormalizer(moviesResult) // normalize result
+  type: 'FETCH_MOVIES',
+  payload: movieNormalizer(moviesResult), // normalize result
 });
 
 // Set selected filter
-const setFilter = (filter) => ({
-    type: 'SET_FILTER',
-    filter
+const setFilter = filter => ({
+  type: 'SET_FILTER',
+  filter,
 });
 
-export {
-    fetchMovies,
-    setFilter
-};
+export { fetchMovies, setFilter };

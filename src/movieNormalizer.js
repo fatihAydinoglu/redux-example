@@ -4,8 +4,8 @@ import { schema, normalize } from 'normalizr';
 const actor = new schema.Entity('actors');
 const genre = new schema.Entity('genres');
 const movie = new schema.Entity('movies', {
-    genres: [genre],
-    actors: [actor]
+  genres: [genre],
+  actors: [actor],
 });
 const movieList = [movie];
 
