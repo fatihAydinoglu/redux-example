@@ -36,6 +36,7 @@ const getMoviesResult = createSelector(
           const movie = movies.get(movieId.toString());
           const movieResultItemMap = Map({
             movie,
+            title: movie.get('title'),
             actors: movie.get('actors').map(actorId => actors.get(actorId.toString())),
             genres: movie.get('genres').map(genreId => genres.get(genreId.toString())),
           });
